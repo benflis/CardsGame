@@ -167,11 +167,9 @@ class _NewCardState extends State<NewCard> {
                   ),
                   child: Row(
                     children: [
-                      SvgPicture.asset(
-                        'Icons/Plus.svg',
+                      Icon(
+                        Icons.add,
                         color: Colors.white,
-                        height: 18,
-                        width: 18,
                       ),
                       SizedBox(
                         width: 15,

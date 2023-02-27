@@ -46,11 +46,9 @@ class _CardsManager extends State<CardsManager> {
                   ),
                   child: Row(
                     children: [
-                      SvgPicture.asset(
-                        'Icons/Plus.svg',
+                      Icon(
+                        Icons.add,
                         color: Colors.white,
-                        height: 18,
-                        width: 18,
                       ),
                       SizedBox(
                         width: 15,
