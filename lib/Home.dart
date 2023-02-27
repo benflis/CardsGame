@@ -21,15 +21,16 @@ class _HomeState extends State<Home> {
         title: Text('Cards Game'),
         backgroundColor: Color(0xFF001a1e),
         leading: IconButton(
-            onPressed: () {
-              Navigator.pushNamed(context, '/cardsmanager');
-            },
-            icon: SvgPicture.asset(
-              'Icons/Card.svg',
-              color: Colors.white,
-              height: 24,
-              width: 24,
-            )),
+          onPressed: () {
+            Navigator.pushNamed(context, '/cardsmanager');
+          },
+          icon: SvgPicture.asset(
+            'Icons/Card.svg',
+            color: Colors.white,
+            height: 24,
+            width: 24,
+          ),
+        ),
       ),
       body: Container(
         height: MediaQuery.of(context).size.height,
