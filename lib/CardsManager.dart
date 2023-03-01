@@ -26,7 +26,7 @@ class _CardsManager extends State<CardsManager> {
         child: Stack(
           children: [
             ListView.builder(
-              itemCount: Provider.of<Data>(context).theWord.length,
+              itemCount: Provider.of<Data>(context).currentDeck.length,
               itemBuilder: (context, index) {
                 return CardModel(index: index);
               },
@@ -104,8 +104,9 @@ class CardModel extends StatelessWidget {
             height: 200,
             width: double.infinity,
             alignment: Alignment.center,
-            child: Text(
-                Provider.of<Data>(context).theWord[index]['Recto'].toString()),
+            child: Text(Provider.of<Data>(context)
+                .currentDeck[index]['Recto']
+                .toString()),
           ),
           SizedBox(
             height: 5,
@@ -132,8 +133,9 @@ class CardModel extends StatelessWidget {
             height: 200,
             width: double.infinity,
             alignment: Alignment.center,
-            child: Text(
-                Provider.of<Data>(context).theWord[index]['Verso'].toString()),
+            child: Text(Provider.of<Data>(context)
+                .currentDeck[index]['Verso']
+                .toString()),
           ),
           Divider(
             height: 20,

@@ -73,12 +73,12 @@ class _NewCardState extends State<NewCard> {
                               for (int i = 0;
                                   i <
                                       Provider.of<Data>(context, listen: false)
-                                          .theWord
+                                          .currentDeck
                                           .length;
                                   i++) {
                                 if (value ==
                                     Provider.of<Data>(context, listen: false)
-                                        .theWord[i]['Recto']) {
+                                        .currentDeck[i]['Recto']) {
                                   return "Duplicate";
                                 }
                               }
