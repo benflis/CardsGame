@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'dart:math';
-import 'dart:async';
+
+import 'package:flutter/services.dart';
 
 class Data extends ChangeNotifier {
   List<Map<String, dynamic>> currentDeck = [];
@@ -11,35 +12,55 @@ class Data extends ChangeNotifier {
 
   Random random = Random();
   int index = 0;
-  int numberOfElements = 0;
+  int numberOfElements = 1;
   void GenerateNumber() {
     sortCurrentDeck();
-    // if (currentDeck.length == 0) {
-    index = random.nextInt(currentDeck.length);
-    // }
-    // else {
-    //   Timer.periodic(Duration(seconds: 5), (Timer t) {
-    //     index = Random().nextInt(hardWords);
-    //     print('executed 1min');
-    //     notifyListeners();
-    //   });
-    //   Timer.periodic(Duration(minutes: 6), (Timer t) {
-    //     index = Random().nextInt(hardWords) + mediumWords;
-    //     print('executed 6min');
-    //     notifyListeners();
-    //   });
-    //   Timer.periodic(Duration(minutes: 10), (Timer t) {
-    //     index = Random().nextInt(hardWords + mediumWords) + easyWords;
-    //     print('executed 10min');
-    //     notifyListeners();
-    //   });
-    //   Timer.periodic(Duration(minutes: 20), (Timer t) {
-    //     index = Random().nextInt(hardWords + mediumWords + easyWords) +
-    //         effortlessWords;
-    //     print('executed 20min');
-    //     notifyListeners();
-    //   });
-    // }
+    print(numberOfElements);
+
+    if (numberOfElements % 12 == 0 && effortlessWords != 0) {
+      index = random.nextInt(currentDeck.length -
+              (hardWords + mediumWords + easyWords) -
+              (currentDeck.length -
+                  (hardWords + mediumWords + easyWords) -
+                  effortlessWords)) +
+          hardWords +
+          mediumWords +
+          easyWords;
+      print(
+          'end :${currentDeck.length - (hardWords + mediumWords + easyWords) - (currentDeck.length - (hardWords + mediumWords + easyWords) - effortlessWords)}');
+      print('start :${hardWords + mediumWords + easyWords}');
+      print('1st phase $index');
+    } else {
+      if (numberOfElements % 8 == 0 && easyWords != 0) {
+        index = random.nextInt(currentDeck.length -
+                effortlessWords -
+                (currentDeck.length - effortlessWords - easyWords)) +
+            hardWords +
+            mediumWords;
+        print(
+            'end :${currentDeck.length - effortlessWords - (currentDeck.length - effortlessWords - easyWords)}');
+        print('start : ${hardWords + mediumWords}');
+        print('2nd phase $index');
+      } else {
+        if (numberOfElements % 4 == 0 && mediumWords != 0) {
+          index = random.nextInt(currentDeck.length -
+                  (easyWords + effortlessWords) -
+                  (currentDeck.length -
+                      (easyWords + effortlessWords) -
+                      mediumWords)) +
+              hardWords;
+          print(
+              'end :${currentDeck.length - (easyWords + effortlessWords) - (currentDeck.length - (easyWords + effortlessWords) - mediumWords)}');
+          print('start :$hardWords');
+          print('3rd phase $index');
+        } else {
+          index = random.nextInt(currentDeck.length);
+          print('4th phase $index');
+        }
+      }
+    }
+
+    numberOfElements++;
 
     notifyListeners();
   }
@@ -66,31 +87,148 @@ class Data extends ChangeNotifier {
   }
 
   void addHardWord() {
+    int comp = 0;
     currentDeck[index]['Priority'] = 4;
-    print(currentDeck);
     hardWords++;
+    for (int i = 0; i < currentDeck.length; i++) {
+      if (currentDeck[i] == (currentDeck[index])) {
+        if (currentDeck[index]['Priority'] == 1) {
+          effortlessWords--;
+          print('removed from eff');
+        } else {
+          if (currentDeck[index]['Priority'] == 3) {
+            mediumWords--;
+            print('removed from med');
+          } else {
+            if (currentDeck[index]['Priority'] == 2) {
+              easyWords--;
+              print('removed from easy');
+            } else {
+              if (currentDeck[i] == currentDeck[index]) {
+                comp++;
+              }
+
+              if (comp > 1) {
+                hardWords--;
+                print('duplicate');
+              }
+            }
+          }
+        }
+      }
+    }
+    print('hardwords :$hardWords');
 
     notifyListeners();
   }
 
   void addMediumWord() {
+    int comp = 0;
     currentDeck[index]['Priority'] = 3;
     print(currentDeck);
     mediumWords++;
+    for (int i = 0; i < currentDeck.length; i++) {
+      if (currentDeck[i] == (currentDeck[index])) {
+        if (currentDeck[index]['Priority'] == 4) {
+          hardWords--;
+          print('removed from hard');
+        } else {
+          if (currentDeck[index]['Priority'] == 1) {
+            effortlessWords--;
+            print('removed from eff');
+          } else {
+            if (currentDeck[index]['Priority'] == 2) {
+              easyWords--;
+              print('removed from easy');
+            } else {
+              if (currentDeck[i] == currentDeck[index]) {
+                comp++;
+              }
+
+              if (comp > 1) {
+                mediumWords--;
+                print('duplicate');
+              }
+            }
+          }
+        }
+      }
+    }
+
+    print('mediumWords :$mediumWords');
     notifyListeners();
   }
 
   void addEasyWord() {
+    int comp = 0;
     currentDeck[index]['Priority'] = 2;
     print(currentDeck);
     easyWords++;
+    for (int i = 0; i < currentDeck.length; i++) {
+      if (currentDeck[i] == (currentDeck[index])) {
+        if (currentDeck[index]['Priority'] == 4) {
+          hardWords--;
+          print('removed from hard');
+        } else {
+          if (currentDeck[index]['Priority'] == 3) {
+            mediumWords--;
+            print('removed from med');
+          } else {
+            if (currentDeck[index]['Priority'] == 1) {
+              effortlessWords--;
+              print('removed from eff');
+            } else {
+              if (currentDeck[i] == currentDeck[index]) {
+                comp++;
+              }
+              if (comp > 1) {
+                easyWords--;
+                print('duplicate');
+              }
+            }
+          }
+        }
+      }
+    }
+
+    print('easyWords :$easyWords');
     notifyListeners();
   }
 
   void addEffortlessWord() {
+    int comp = 0;
     currentDeck[index]['Priority'] = 1;
     print(currentDeck);
     effortlessWords++;
+    for (int i = 0; i < currentDeck.length; i++) {
+      if (currentDeck[i] == (currentDeck[index])) {
+        if (currentDeck[index]['Priority'] == 4) {
+          hardWords--;
+          print('removed from hard');
+        } else {
+          if (currentDeck[index]['Priority'] == 3) {
+            mediumWords--;
+            print('removed from med');
+          } else {
+            if (currentDeck[index]['Priority'] == 2) {
+              easyWords--;
+              print('removed from easy');
+            } else {
+              if (currentDeck[i] == currentDeck[index]) {
+                comp++;
+              }
+
+              if (comp > 1) {
+                effortlessWords--;
+                print('duplicate');
+              }
+            }
+          }
+        }
+      }
+    }
+
+    print('effortlessWords :$effortlessWords');
     notifyListeners();
   }
 

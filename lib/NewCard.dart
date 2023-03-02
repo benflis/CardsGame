@@ -152,7 +152,7 @@ class _NewCardState extends State<NewCard> {
                 onTap: () {
                   if (_formKey.currentState!.validate()) {
                     Provider.of<Data>(context, listen: false)
-                        .addNewWord(recto!, verso!, 10);
+                        .addNewWord(recto!, verso!, 0);
 
                     rectoController.clear();
                     versoController.clear();
