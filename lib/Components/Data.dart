@@ -20,7 +20,7 @@ class Data extends ChangeNotifier {
     sortCurrentDeck();
     print(numberOfElements);
 
-    if (numberOfElements % 7 == 0 && effortlessWords != 0) {
+    if (numberOfElements % 10 == 0 && effortlessWords != 0) {
       index = random.nextInt(currentDeck.length -
               (hardWords + mediumWords + easyWords) -
               (currentDeck.length -
@@ -34,7 +34,7 @@ class Data extends ChangeNotifier {
       print('start :${hardWords + mediumWords + easyWords}');
       print('1st phase $index');
     } else {
-      if (numberOfElements % 5 == 0 && easyWords != 0) {
+      if (numberOfElements % 7 == 0 && easyWords != 0) {
         index = random.nextInt(currentDeck.length -
                 effortlessWords -
                 (currentDeck.length - effortlessWords - easyWords)) +
@@ -45,7 +45,7 @@ class Data extends ChangeNotifier {
         print('start : ${hardWords + mediumWords}');
         print('2nd phase $index');
       } else {
-        if (numberOfElements % 3 == 0 && mediumWords != 0) {
+        if (numberOfElements % 5 == 0 && mediumWords != 0) {
           index = random.nextInt(currentDeck.length -
                   (easyWords + effortlessWords) -
                   (currentDeck.length -
@@ -57,7 +57,12 @@ class Data extends ChangeNotifier {
           print('start :$hardWords');
           print('3rd phase $index');
         } else {
-          index = random.nextInt(currentDeck.length);
+          if (numberOfElements % 3 == 0 && hardWords != 0) {
+            index = random.nextInt(hardWords);
+          } else {
+            index = random.nextInt(currentDeck.length);
+          }
+
           print('4th phase $index');
         }
       }
@@ -121,7 +126,6 @@ class Data extends ChangeNotifier {
     currentDeck[index]['Priority'] = 4;
     hardWords++;
     print('hardwords :$hardWords');
-
     notifyListeners();
   }
 
