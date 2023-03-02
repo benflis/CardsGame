@@ -59,11 +59,11 @@ class Data extends ChangeNotifier {
         } else {
           if (numberOfElements % 3 == 0 && hardWords != 0) {
             index = random.nextInt(hardWords);
+            print('4th phase $index');
           } else {
             index = random.nextInt(currentDeck.length);
+            print('5th phase $index');
           }
-
-          print('4th phase $index');
         }
       }
     }
